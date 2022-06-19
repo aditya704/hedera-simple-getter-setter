@@ -1,7 +1,7 @@
 console.clear();
-require("dotenv").config();
+require("dotenv").config();                 // To add constants from .env file
 
-const {
+const {                                     // Adding the required modules from the @hedera/sdk pakage
     AccountId,
     PrivateKey,
     Client,
@@ -13,21 +13,21 @@ const {
     ContractExecuteTransaction
 } = require("@hashgraph/sdk");
 
-const fs = require("fs");
+const fs = require("fs");                           // Adding the file system of Javascript
 const { join } = require("path");
 const { kill } = require("process");
 
 // Configure accounts and client
-const operatorID = AccountId.fromString(process.env.OPERATOR_ID);
-const operatorKey = PrivateKey.fromString(process.env.PRIVATE_KEY);
+const operatorID = AccountId.fromString(process.env.OPERATOR_ID);           // Setting up operator id
+const operatorKey = PrivateKey.fromString(process.env.PRIVATE_KEY);         // Setting up private key
 
 const client = Client.forTestnet().setOperator(operatorID, operatorKey);
 
 async function main(){
 
     // Import the compiled contract bytecode
-    const contractBytecode = fs.readFileSync("LookupContract_sol_LookupContract.bin");
-
+    const contractBytecode = fs.readFileSync("LookupContract_sol_LookupContract.bin");     
+                                                                                                
     // Create a file on Hedera and store the byte code
     const fileCreateTx = new FileCreateTransaction()
         .setContents(contractBytecode)
